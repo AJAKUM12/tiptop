@@ -3,204 +3,212 @@ const jewelryData = [
 
     {
         id: 2,
-        name: "Pearl Drop Earrings",
-        category: "earring",
-        price: 450,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(1).JPG",
-        description: "Classic pearl drop earrings in sterling silver. Timeless elegance that complements any outfit."
+        name: "Sizzling heart necklace",
+        category: "necklace",
+        price: 370,
+        image: "./images/DOC-20251002-WA0004.jpg",
+        description: "Trendy layered chain necklace in rose gold. Modern design for contemporary style"
     },
     {
         id: 3,
-        name: "Gold Chain Necklace",
+        name: "Pink heart ray pendant",
+        image: "./images/DOC-20251002-WA0005.jpg",
         category: "necklace",
-        price: 850,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(2).JPG",
-        description: "18k gold chain necklace with a delicate pendant. Perfect for layering or wearing alone."
+        price: 250,
+        description: "Necklace with a delicate pendant. Perfect for layering or wearing alone."
     },
     {
         id: 4,
-        name: "Tennis Bracelet",
-        category: "bracelet",
-        price: 1200,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(3).JPG",
-        description: "Stunning tennis bracelet with cubic zirconia stones. Adds sparkle to any wrist."
+        image: "./images/DOC-20251002-WA0006.jpg",
+        name: "Cheerry pendant",
+        category: "necklace",
+        price: 210,
+        description: "Bold statement necklace with geometric design. Perfect centerpiece for any outfit."
     },
     {
         id: 5,
-        name: "Ruby Engagement Ring",
-        category: "ring",
-        price: 3200,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(4).JPG",
-        description: "Vintage-inspired ruby engagement ring with diamond accents in yellow gold setting."
+        image: "./images/DOC-20251002-WA0007.jpg",
+        name: "Elite glittering bracelet",
+        category: "bracelet",
+        price: 350,
+        description: "Customizable charm bracelet in sterling silver. Add your favorite charms to make it unique."
     },
     {
         id: 6,
-        name: "Crystal Chandelier Earrings",
-        category: "earring",
-        price: 320,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(5).JPG",
-        description: "Glamorous chandelier earrings with crystal drops. Perfect for evening events and parties."
+        name: "Premium gold cuff bracelet",
+        category: "bracelet",
+        image: "./images/DOC-20251002-WA0008.jpg",
+        price: 500,
+        description: "Customizable charm bracelet in sterling silver. Add your favorite charms to make it unique."
     },
     {
         id: 7,
-        name: "Layered Chain Necklace",
-        category: "necklace",
-        price: 680,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(6).JPG",
-        description: "Trendy layered chain necklace in rose gold. Modern design for contemporary style."
+        name: "Galaxy gold bracelet",
+        category: "bracelet",
+        image: "./images/DOC-20251002-WA0009.jpg",
+        price: 350,
+        description: "Customizable charm bracelet in sterling silver. Add your favorite charms to make it unique."
     },
     {
         id: 8,
         name: "Charm Bracelet",
+        image: "./images/DOC-20251002-WA0010.jpg",
         category: "bracelet",
         price: 420,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(7).JPG",
         description: "Customizable charm bracelet in sterling silver. Add your favorite charms to make it unique."
     },
     {
         id: 9,
-        name: "Emerald Cocktail Ring",
-        category: "ring",
-        price: 1850,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(8).JPG",
-        description: "Bold emerald cocktail ring surrounded by diamonds. Statement piece for special occasions."
+        name: "Ever charmed bracelet",
+        category: "bracelet",
+        image: "./images/DOC-20251002-WA0011.jpg",
+        price: 550,
+        description: "Customizable charm bracelet in sterling silver. Add your favorite charms to make it unique."
     },
     {
         id: 10,
-        name: "Hoop Earrings",
-        category: "earring",
-        price: 180,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(9).JPG",
+        name: "Enamel flower bracelet",
+        category: "bracelet",
+        image: "./images/DOC-20251002-WA0012.jpg",
+        price: 350,
         description: "Classic gold hoop earrings in medium size. Versatile and perfect for everyday wear."
     },
     {
         id: 11,
-        name: "Statement Necklace",
-        category: "necklace",
-        price: 750,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(10).JPG",
+        name: "Layered wave bracelet",
+        category: "bracelet",
+        image: "./images/DOC-20251002-WA0013.jpg",
+        price: 370,
         description: "Bold statement necklace with geometric design. Perfect centerpiece for any outfit."
     },
     {
         id: 12,
-        name: "Diamond Tennis Bracelet",
+        name: "Ball bangle cuff bracelet",
         category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(11).JPG",
+        image: "./images/DOC-20251002-WA0014.jpg",
+        price: 370,
         description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
     },
     {
         id: 13,
-        name: "Diamond Tennis Bracelet",
+        name: "Date bracelet",
         category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(12).JPG",
+        image: "./images/DOC-20251002-WA0015.jpg",
+        price: 440,
         description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
     },
     {
         id: 14,
-        name: "Diamond Tennis Bracelet",
+        name: "Charm bracelet",
         category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(13).JPG",
+        image: "./images/DOC-20251002-WA0016.jpg",
+        price: 550,
         description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
     },
     {
         id: 15,
-        name: "Diamond Tennis Bracelet",
+        name: "Evel eye bracelet",
+        image: "./images/DOC-20251002-WA0017.jpg",
         category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(14).JPG",
+        price: 450,
         description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
     },
     {
         id: 16,
-        name: "Diamond Tennis Bracelet",
+        name: "Charm bracelet",
+        image: "./images/DOC-20251002-WA0018.jpg",
         category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(15).JPG",
+        price: 550,
         description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
     },
     {
         id: 17,
-        name: "Diamond Tennis Bracelet",
+        name: "Smart bracelet",
+        image: "./images/DOC-20251002-WA0019.jpg",
         category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(16).JPG",
+        price: 480,
         description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
     },
     {
         id: 18,
-        name: "Diamond Tennis Bracelet",
+        name: "Round balls bangles bracelet",
+        image: "./images/DOC-20251002-WA0020.jpg",
         category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(17).JPG",
+        price: 360,
         description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
     },
     {
         id: 19,
-        name: "Diamond Tennis Bracelet",
+        name: "White clover bracelet",
+        image: "./images/DOC-20251002-WA0021.jpg",
         category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(18).JPG",
+        price: 350,
         description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
     },
     {
         id: 20,
-        name: "Diamond Tennis Bracelet",
+        name: "Elite glittering bracelet",
+        image: "./images/DOC-20251002-WA0022.jpg",
         category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(19).JPG",
+        price: 420,
         description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
     },
     {
         id: 21,
-        name: "Diamond Tennis Bracelet",
+        name: "Elite glittering bracelet",
         category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(20).JPG",
+        image: "./images/DOC-20251002-WA0023.jpg",
+        price: 450,
         description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
     },
-    {
-        id: 22,
-        name: "Diamond Tennis Bracelet",
-        category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(21).JPG",
-        description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
-    },
-    {
-        id: 23,
-        name: "Diamond Tennis Bracelet",
-        category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(22).JPG",
-        description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
-    },
-    {
-        id: 24,
-        name: "Diamond Tennis Bracelet",
-        category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(23).JPG",
-        description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
-    },
-    {
-        id: 25,
-        name: "Diamond Tennis Bracelet",
-        category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(24).JPG",
-        description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
-    },
-    {
-        id: 26,
-        name: "Diamond Tennis Bracelet",
-        category: "bracelet",
-        price: 2800,
-        image: "file:///C:/Users/AJAKUM/OneDrive%20-%20Barco%20N.V/Pictures/jewels/pic%20(25).JPG",
-        description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
-    }
+    // {
+    //     id: 22,
+    //     name: "Diamond Tennis Bracelet",
+    //     image: "./images/DOC-20251002-WA0024.jpg",
+    //     category: "bracelet",
+    //     price: 2800,
+    //     description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
+    // },
+    // {
+    //     id: 23,
+    //     name: "Diamond Tennis Bracelet",
+    //     image: "./images/DOC-20251002-WA0025.jpg",
+    //     category: "bracelet",
+    //     price: 2800,
+    //     description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
+    // },
+    // {
+    //     id: 24,
+    //     name: "Diamond Tennis Bracelet",
+    //     image: "./images/DOC-20251002-WA0026.jpg",
+    //     category: "bracelet",
+    //     price: 2800,
+    //     description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
+    // },
+    // {
+    //     id: 25,
+    //     name: "Diamond Tennis Bracelet",
+    //     image: "./images/DOC-20251002-WA0027.jpg",
+    //     category: "bracelet",
+    //     price: 2800,
+    //     description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
+    // },
+    // {
+    //     id: 26,
+    //     name: "Diamond Tennis Bracelet",
+    //     category: "bracelet",
+    //     image: "./images/DOC-20251002-WA0028.jpg",
+    //     price: 2800,
+    //     description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
+    // },
+    // {
+    //     id: 27,
+    //     name: "Diamond Tennis Bracelet",
+    //     category: "bracelet",
+    //     image: "./images/DOC-20251002-WA0029.jpg",
+    //     price: 2800,
+    //     description: "Luxurious diamond tennis bracelet in white gold. Premium quality for special moments."
+    // }
 ];
 
 // DOM elements
@@ -304,11 +312,12 @@ function createJewelryItem(item, index) {
         </div>
         <div class="jewelry-info">
             <h3 class="jewelry-title">${item.name}</h3>
-            <div class="jewelry-price">$${item.price.toLocaleString()}</div>
-            <p class="jewelry-description">${item.description.substring(0, 80)}...</p>
+            <div class="jewelry-price">Rs ${item.price.toLocaleString()}</div>
         </div>
     `;
     
+    // <p class="jewelry-description">${item.description.substring(0, 80)}...</p>
+
     itemElement.addEventListener('click', () => openModal(item));
     
     return itemElement;
@@ -361,7 +370,7 @@ function openModal(item) {
     modalImage.alt = item.name;
     modalTitle.textContent = item.name;
     modalCategory.textContent = item.category.toUpperCase();
-    modalPrice.textContent = `$${item.price.toLocaleString()}`;
+    modalPrice.textContent = `Rs ${item.price.toLocaleString()}`;
     modalDescription.textContent = item.description;
     
     modal.style.display = 'block';
