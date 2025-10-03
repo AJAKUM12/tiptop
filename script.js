@@ -26,6 +26,12 @@ let currentFilter = 'all';
 let currentSearch = '';
 let currentItem = null;
 
+// WhatsApp contacts
+const whatsappContacts = [
+    { name: "Sales Team 1", number: "8080577408" },
+    { name: "Sales Team 2", number: "6280362243" }
+];
+
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
     showLoading();
@@ -177,17 +183,7 @@ function closeModal() {
 // WhatsApp sharing
 function shareOnWhatsApp() {
     if (!currentItem) return;
-    
-    const message = `Check out this beautiful ${currentItem.name}!\n\n` +
-                   `💎 ${currentItem.name}\n` +
-                   `💰 Price: $${currentItem.price.toLocaleString()}\n` +
-                   `📝 ${currentItem.description}\n\n` +
-                   `Visit our jewelry collection: ${window.location.href}`;
-    
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-    
-    showToast('Opening WhatsApp...');
+    showWhatsAppContactSelector(currentItem);
 }
 
 // Quick share from grid
@@ -197,13 +193,107 @@ function shareItem(itemId, event) {
     const item = jewelryData.find(i => i.id === itemId);
     if (!item) return;
     
+    showWhatsAppContactSelector(item);
+}
+
+// Show WhatsApp contact selector
+function showWhatsAppContactSelector(item) {
+    // Create contact selector modal
+    const selectorModal = document.createElement('div');
+    selectorModal.className = 'whatsapp-contact-modal';
+    selectorModal.style.position = 'fixed';
+    selectorModal.style.top = '0';
+    selectorModal.style.left = '0';
+    selectorModal.style.width = '100%';
+    selectorModal.style.height = '100%';
+    selectorModal.style.backgroundColor = 'rgba(0,0,0,0.7)';
+    selectorModal.style.zIndex = '10000';
+    selectorModal.style.display = 'flex';
+    selectorModal.style.justifyContent = 'center';
+    selectorModal.style.alignItems = 'center';
+    
+    const modalContent = document.createElement('div');
+    modalContent.style.backgroundColor = 'white';
+    modalContent.style.padding = '20px';
+    modalContent.style.borderRadius = '10px';
+    modalContent.style.maxWidth = '400px';
+    modalContent.style.width = '90%';
+    
+    const title = document.createElement('h3');
+    title.textContent = 'Select Contact to Share';
+    title.style.marginBottom = '20px';
+    title.style.textAlign = 'center';
+    
+    const contactsList = document.createElement('div');
+    contactsList.style.display = 'flex';
+    contactsList.style.flexDirection = 'column';
+    contactsList.style.gap = '10px';
+    
+    // Add contacts
+    whatsappContacts.forEach(contact => {
+        const contactBtn = document.createElement('button');
+        contactBtn.className = 'btn';
+        contactBtn.style.display = 'flex';
+        contactBtn.style.alignItems = 'center';
+        contactBtn.style.padding = '12px';
+        contactBtn.style.backgroundColor = '#25D366'; // WhatsApp green
+        contactBtn.style.color = 'white';
+        contactBtn.style.border = 'none';
+        contactBtn.style.borderRadius = '5px';
+        contactBtn.style.cursor = 'pointer';
+        
+        contactBtn.innerHTML = `
+            <i class="fab fa-whatsapp" style="font-size: 20px; margin-right: 10px;"></i>
+            ${contact.name} (${contact.number})
+        `;
+        
+        contactBtn.addEventListener('click', () => {
+            sendWhatsAppMessage(contact.number, item);
+            document.body.removeChild(selectorModal);
+        });
+        
+        contactsList.appendChild(contactBtn);
+    });
+    
+    // Add cancel button
+    const cancelBtn = document.createElement('button');
+    cancelBtn.textContent = 'Cancel';
+    cancelBtn.style.marginTop = '20px';
+    cancelBtn.style.padding = '10px';
+    cancelBtn.style.backgroundColor = '#ddd';
+    cancelBtn.style.border = 'none';
+    cancelBtn.style.borderRadius = '5px';
+    cancelBtn.style.cursor = 'pointer';
+    cancelBtn.addEventListener('click', () => {
+        document.body.removeChild(selectorModal);
+    });
+    
+    // Assemble modal
+    modalContent.appendChild(title);
+    modalContent.appendChild(contactsList);
+    modalContent.appendChild(cancelBtn);
+    selectorModal.appendChild(modalContent);
+    
+    // Add to document
+    document.body.appendChild(selectorModal);
+    
+    // Close when clicking outside
+    selectorModal.addEventListener('click', function(e) {
+        if (e.target === selectorModal) {
+            document.body.removeChild(selectorModal);
+        }
+    });
+}
+
+// Send WhatsApp message to specific number
+function sendWhatsAppMessage(number, item) {
     const message = `Check out this beautiful ${item.name}!\n\n` +
                    `💎 ${item.name}\n` +
-                   `💰 Price: $${item.price.toLocaleString()}\n` +
+                   `💰 Price: Rs ${item.price.toLocaleString()}\n` +
                    `📝 ${item.description}\n\n` +
                    `Visit our jewelry collection: ${window.location.href}`;
     
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     
     showToast('Opening WhatsApp...');
