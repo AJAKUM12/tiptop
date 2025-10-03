@@ -1,7 +1,9 @@
 // Admin Panel JavaScript
 
-// API URL
-const API_URL = 'http://localhost:3000/api';
+// Dynamic API URL based on current environment
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? 'http://localhost:3000/api'  // Development environment
+    : `${window.location.origin}/api`;  // Production environment
 
 // DOM Elements
 const loginScreen = document.getElementById('loginScreen');
