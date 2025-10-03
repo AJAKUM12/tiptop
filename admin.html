@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewelry Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            color: #333;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #357abD;
+        }
+        
+        .btn.danger {
+            background-color: #e74c3c;
+        }
+        
+        .btn.danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn.success {
+            background-color: #2ecc71;
+        }
+        
+        .btn.success:hover {
+            background-color: #27ae60;
+        }
+        
+        .jewelry-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .jewelry-table th, .jewelry-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .jewelry-table th {
+            background-color: #f9f9f9;
+        }
+        
+        .jewelry-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .jewelry-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+            padding: 50px 0;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 30px;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+        
+        .toast.show {
+            display: block;
+            animation: fadeInOut 3s;
+        }
+        
+        .toast.success {
+            background-color: #2ecc71;
+        }
+        
+        .toast.error {
+            background-color: #e74c3c;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .pagination button {
+            margin: 0 5px;
+            padding: 8px 15px;
+            border: none;
+            background: #4a90e2;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .pagination button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .image-upload-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            display: none;
+        }
+        
+        .upload-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .upload-tab {
+            padding: 10px 15px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .upload-tab.active {
+            background-color: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+        
+        .upload-content {
+            display: none;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        
+        .upload-content.active {
+            display: block;
+        }
+        
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .file-input {
+            position: absolute;
+            font-size: 100px;
+            opacity: 0;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+        }
+        
+        .upload-progress {
+            height: 5px;
+            width: 0%;
+            background-color: #4a90e2;
+            margin-top: 10px;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="container">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>Admin Login</h2>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button id="loginBtn" class="btn" style="width: 100%;">Login</button>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="container" style="display: none;">
+        <div class="header">
+            <h1>Jewelry Admin Panel</h1>
+            <div>
+                <button id="addNewBtn" class="btn success"><i class="fas fa-plus"></i> Add New Item</button>
+                <button id="saveDataBtn" class="btn"><i class="fas fa-save"></i> Save All Changes</button>
+                <button id="logoutBtn" class="btn danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+
+        <div class="search-filter">
+            <div class="form-group">
+                <input type="text" id="searchAdmin" placeholder="Search jewelry...">
+            </div>
+        </div>
+
+        <table class="jewelry-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="jewelryTableBody">
+                <!-- Jewelry items will be loaded here -->
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <button id="prevPage" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+            <span id="pageInfo">Page 1 of 1</span>
+            <button id="nextPage"><i class="fas fa-chevron-right"></i> Next</button>
+        </div>
+    </div>
+
+    <!-- Add/Edit Jewelry Modal -->
+    <div id="jewelryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Jewelry</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="jewelryForm">
+                <input type="hidden" id="jewelryId">
+                
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="necklace">Necklace</option>
+                        <option value="bracelet">Bracelet</option>
+                        <option value="earrings">Earrings</option>
+                        <option value="rings">Rings</option>
+                        <option value="watches">Watches</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price (Rs)</label>
+                    <input type="number" id="price" name="price" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Image</label>
+                    <div class="image-upload-container">
+                        <div class="upload-options">
+                            <div class="upload-tab active" data-target="upload-path">Existing Path</div>
+                            <div class="upload-tab" data-target="upload-file">Upload New Image</div>
+                        </div>
+                        
+                        <div id="upload-path" class="upload-content active">
+                            <input type="text" id="image" name="image" placeholder="./images/filename.jpg">
+                        </div>
+                        
+                        <div id="upload-file" class="upload-content">
+                            <div class="file-input-container">
+                                <button type="button" class="btn">Select Image</button>
+                                <input type="file" id="imageFile" class="file-input" accept="image/*">
+                            </div>
+                            <div id="uploadProgress" class="upload-progress"></div>
+                            <div id="uploadStatus"></div>
+                        </div>
+                        
+                        <img id="imagePreview" class="image-preview" src="" alt="Image Preview">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn success" id="saveBtn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2>Confirm Deletion</h2>
+                <span class="close">&times;</span>
+            </div>
+            <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+            <div class="form-actions">
+                <button type="button" class="btn" id="cancelDeleteBtn">Cancel</button>
+                <button type="button" class="btn danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Message -->
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
