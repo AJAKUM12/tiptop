@@ -28,8 +28,8 @@ let currentItem = null;
 
 // WhatsApp contacts
 const whatsappContacts = [
-    { name: "Kiran", number: "6280362243" },
-    { name: "Priya", number: "8080577408" }
+    { name: "Sales Team 1", number: "8080577408" },
+    { name: "Sales Team 2", number: "6280362243" }
 ];
 
 // Initialize the page

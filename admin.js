@@ -709,7 +709,8 @@ async function handleFormSubmit(e) {
 // Save all data to the server
 async function saveAllData() {
     try {
-        const response = await fetch(`${API_URL}/save`, {
+        // First save data to MongoDB
+        const saveResponse = await fetch(`${API_URL}/save`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -717,11 +718,19 @@ async function saveAllData() {
             body: JSON.stringify(jewelryData)
         });
         
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+        if (!saveResponse.ok) {
+            throw new Error(`HTTP error! Status: ${saveResponse.status}`);
         }
         
-        showToast('All changes saved successfully', 'success');
+        // Then generate the data.js file for client-side usage
+        const generateResponse = await fetch(`${API_URL}/generate-data-file`);
+        
+        if (!generateResponse.ok) {
+            throw new Error(`HTTP error! Status: ${generateResponse.status}`);
+        }
+        
+        const result = await generateResponse.json();
+        showToast(`All changes saved successfully. ${result.count} items processed.`, 'success');
     } catch (error) {
         console.error('Error saving data:', error);
         showToast('Failed to save changes', 'error');

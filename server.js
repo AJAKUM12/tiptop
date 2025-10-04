@@ -4,10 +4,28 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
+const mongoose = require('mongoose');
+
+// Import Jewelry model
+const Jewelry = require('./models/jewelry');
 
 // Create Express app
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// MongoDB Connection String - replace with your own connection string
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/jewelry_store';
+
+// Connect to MongoDB
+mongoose.connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+});
 
 // Middleware
 app.use(cors({
@@ -18,8 +36,7 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname)));
 
-// Data file path
-const dataFilePath = path.join(__dirname, 'data.js');
+// Image folder setup
 const imageFolder = path.join(__dirname, 'images');
 
 // Ensure images directory exists
@@ -58,111 +75,105 @@ const upload = multer({
     }
 });
 
-// Helper function to read jewelry data
-function readJewelryData() {
-    try {
-        // Read the data.js file
-        const fileContent = fs.readFileSync(dataFilePath, 'utf8');
-        
-        // Extract the array part (remove "const jewelryData = " and the trailing semicolon)
-        const dataString = fileContent
-            .replace('const jewelryData = ', '')
-            .replace(/;[\s\n]*$/, '');
-        
-        return JSON.parse(dataString);
-    } catch (error) {
-        console.error('Error reading jewelry data:', error);
-        return [];
-    }
-}
-
-// Helper function to write jewelry data
-function writeJewelryData(data) {
-    try {
-        const dataString = `const jewelryData = ${JSON.stringify(data, null, 4)};`;
-        fs.writeFileSync(dataFilePath, dataString, 'utf8');
-        return true;
-    } catch (error) {
-        console.error('Error writing jewelry data:', error);
-        return false;
-    }
-}
+// WhatsApp contact numbers
+const whatsappContacts = [
+    { name: "Sales Team 1", number: "8080577408" },
+    { name: "Sales Team 2", number: "6280362243" }
+];
 
 // API Routes
 
+// Get WhatsApp contact numbers
+app.get('/api/contacts', (req, res) => {
+    res.json(whatsappContacts);
+});
+
 // Get all jewelry items
-app.get('/api/jewelry', (req, res) => {
-    const data = readJewelryData();
-    res.json(data);
+app.get('/api/jewelry', async (req, res) => {
+    try {
+        const jewelry = await Jewelry.find().sort('id');
+        res.json(jewelry);
+    } catch (error) {
+        console.error('Error getting jewelry data:', error);
+        res.status(500).json({ error: 'Failed to get jewelry data' });
+    }
 });
 
 // Add new jewelry item
-app.post('/api/jewelry', (req, res) => {
-    const data = readJewelryData();
-    const newItem = req.body;
-    
-    // Generate a new ID (max + 1)
-    const maxId = data.reduce((max, item) => Math.max(max, item.id || 0), 0);
-    newItem.id = maxId + 1;
-    
-    data.push(newItem);
-    
-    if (writeJewelryData(data)) {
-        res.status(201).json(newItem);
-    } else {
-        res.status(500).json({ error: 'Failed to save data' });
+app.post('/api/jewelry', async (req, res) => {
+    try {
+        const newItem = req.body;
+        
+        // Generate a new ID
+        newItem.id = await Jewelry.getNextId();
+        
+        // Create new jewelry item
+        const jewelry = new Jewelry(newItem);
+        await jewelry.save();
+        
+        res.status(201).json(jewelry);
+    } catch (error) {
+        console.error('Error creating jewelry item:', error);
+        res.status(500).json({ error: 'Failed to create jewelry item' });
     }
 });
 
 // Update an existing jewelry item
-app.put('/api/jewelry/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const updatedItem = req.body;
-    const data = readJewelryData();
-    
-    const index = data.findIndex(item => item.id === id);
-    
-    if (index === -1) {
-        return res.status(404).json({ error: 'Item not found' });
-    }
-    
-    data[index] = { ...updatedItem, id };
-    
-    if (writeJewelryData(data)) {
-        res.json(data[index]);
-    } else {
-        res.status(500).json({ error: 'Failed to update data' });
+app.put('/api/jewelry/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const updatedItem = req.body;
+        
+        const jewelry = await Jewelry.findOneAndUpdate(
+            { id: id },
+            updatedItem,
+            { new: true }
+        );
+        
+        if (!jewelry) {
+            return res.status(404).json({ error: 'Item not found' });
+        }
+        
+        res.json(jewelry);
+    } catch (error) {
+        console.error('Error updating jewelry item:', error);
+        res.status(500).json({ error: 'Failed to update jewelry item' });
     }
 });
 
 // Delete a jewelry item
-app.delete('/api/jewelry/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const data = readJewelryData();
-    
-    const index = data.findIndex(item => item.id === id);
-    
-    if (index === -1) {
-        return res.status(404).json({ error: 'Item not found' });
-    }
-    
-    const deletedItem = data[index];
-    data.splice(index, 1);
-    
-    if (writeJewelryData(data)) {
-        res.json(deletedItem);
-    } else {
-        res.status(500).json({ error: 'Failed to delete data' });
+app.delete('/api/jewelry/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        
+        const jewelry = await Jewelry.findOneAndDelete({ id: id });
+        
+        if (!jewelry) {
+            return res.status(404).json({ error: 'Item not found' });
+        }
+        
+        res.json(jewelry);
+    } catch (error) {
+        console.error('Error deleting jewelry item:', error);
+        res.status(500).json({ error: 'Failed to delete jewelry item' });
     }
 });
 
-// Save all jewelry data at once
-app.post('/api/save', (req, res) => {
-    const newData = req.body;
-    
-    if (writeJewelryData(newData)) {
+// Save all jewelry data at once (for bulk operations)
+app.post('/api/save', async (req, res) => {
+    try {
+        const newData = req.body;
+        
+        // Clear existing data and insert new data
+        await Jewelry.deleteMany({});
+        
+        if (newData.length > 0) {
+            await Jewelry.insertMany(newData);
+        }
+        
         res.json({ success: true, message: 'Data saved successfully' });
-    } else {
+    } catch (error) {
+        console.error('Error saving all jewelry data:', error);
         res.status(500).json({ error: 'Failed to save data' });
     }
 });
@@ -213,6 +224,27 @@ app.delete('/api/images', (req, res) => {
     } catch (error) {
         console.error('Error deleting image:', error);
         res.status(500).json({ error: 'Failed to delete image' });
+    }
+});
+
+// Generate data.js file for client-side usage
+app.get('/api/generate-data-file', async (req, res) => {
+    try {
+        const jewelry = await Jewelry.find().sort('id');
+        
+        const dataFilePath = path.join(__dirname, 'data.js');
+        const dataString = `const jewelryData = ${JSON.stringify(jewelry, null, 4)};`;
+        
+        fs.writeFileSync(dataFilePath, dataString, 'utf8');
+        
+        res.json({ 
+            success: true, 
+            message: 'data.js file generated successfully',
+            count: jewelry.length
+        });
+    } catch (error) {
+        console.error('Error generating data file:', error);
+        res.status(500).json({ error: 'Failed to generate data file' });
     }
 });
 
